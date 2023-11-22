@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cache API Example</title>
+</head>
+<body>
+    <h2>Cache API Example</h2>
+
+    <button id="fetchButton">Fetch Data</button>
+
+    <script>
+        document.getElementById('fetchButton').addEventListener('click', function() {
+            fetchAndCache('https://jsonplaceholder.typicode.com/todos/1');
+        });
+
+        async function fetchAndCache(url) {
+            try {
+                let cache = await caches.open('my-cache');
+                let cachedResponse = await cache.match(url);
+
+                if (cachedResponse) {
+                    let data = await cachedResponse.json();
+                    console.log('Data from cache:', data);
+                } else {
+                    let response = await fetch(url);
+                    await cache.put(url, response.clone());
+                    let data = await response.json();
+                    console.log('Data from network:', data);
+                }
+            } catch (error) {
+                console.error('Error fetching and caching data:', error);
+            }
+        }
+    </script>
+</body>
+</html>

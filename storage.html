@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark/Light Theme Toggle</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+            padding: 20px;
+        }
+
+        /* Dark Theme Styles */
+        body.dark-theme {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        /* Light Theme Styles */
+        body.light-theme {
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        /* Toggle Button Styles */
+        #theme-toggle {
+            cursor: pointer;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Dark/Light Theme Toggle</h2>
+
+    <label for="theme-toggle" id="theme-toggle">Toggle Theme</label>
+    
+    <script>
+        // Function to toggle between dark and light themes
+        function toggleTheme() {
+            let body = document.body;
+            body.classList.toggle('dark-theme');
+            body.classList.toggle('light-theme');
+
+            // Store the current theme preference in Local Storage
+            let currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
+            localStorage.setItem('theme', currentTheme);
+        }
+
+        // Check for the user's theme preference in Local Storage
+        let savedTheme = localStorage.getItem('theme');
+
+        // Apply the saved theme or default to light theme
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+        } else {
+            document.body.classList.add('light-theme');
+        }
+
+        // Add a click event listener to the theme toggle button
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+    </script>
+</body>
+</html>
